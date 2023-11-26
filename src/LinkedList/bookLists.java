@@ -30,6 +30,7 @@ class bookPlayList {
     }
 
 
+
     public void addBooks(String Title, String Author, String genre) {
         book newBook = new book(Title, Author, genre);
         NodePractice newNode = new NodePractice(newBook);
@@ -54,17 +55,6 @@ class bookPlayList {
         int i = length();
 
         System.out.println(i);
-//
-//        if (head == null) {
-//            head = newNode;
-//        } else {
-//            main.NodePractice currentNode = head;
-//
-//            while (currentNode.next != null) {
-//                currentNode = currentNode.next;
-//            }
-//            currentNode.next = newNode;
-//        }
     }
 
 
@@ -86,6 +76,22 @@ class bookPlayList {
             currentNode = currentNode.next;
         }
     }
+
+    public void removeDup(){
+        head = rRemove(head);
+    }
+
+    private NodePractice rRemove(NodePractice currentNode){
+        if (currentNode == null){
+            return null;
+        }
+        currentNode.next = rRemove(currentNode.next);
+        if (currentNode.next != null && currentNode.data.author.equals(currentNode.next.data.author)){
+            return currentNode.next;
+        }
+        return currentNode;
+    }
+
 }
 
 
@@ -94,9 +100,13 @@ public class bookLists {
         bookPlayList bookPlayList = new bookPlayList();
         bookPlayList.addBooks("Black Swan", "Nassim Taleb", "Philosophy");
         bookPlayList.addBooks("King Arthur", "Random Guy", "Literature");
+        bookPlayList.addBooks("King Arthur", "Random Guy", "Literature");
         bookPlayList.addBooks("Mac Book", "Nassim Taleb", "Tech");
         bookPlayList.addBooks("How not to fail", "Jayden", "Personal Development");
+        bookPlayList.removeDup();
         bookPlayList.displayBooks();
+
+
 
     }
 }
