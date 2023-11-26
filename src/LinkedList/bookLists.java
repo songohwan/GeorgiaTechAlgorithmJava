@@ -1,4 +1,4 @@
-package main;
+package LinkedList;
 
 class book {
     String title;
