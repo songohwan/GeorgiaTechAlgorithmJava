@@ -1,13 +1,15 @@
+package main;
+
 import java.util.NoSuchElementException;
 
 
 /**
- * Your implementation of an ArrayList.
+ * Your implementation of an main.ArrayList.
  */
 public class ArrayList<T> {
 
     /*
-     * The initial capacity of the ArrayList.
+     * The initial capacity of the main.ArrayList.
      *
      * DO NOT MODIFY THIS VARIABLE!
      */
@@ -20,7 +22,7 @@ public class ArrayList<T> {
     private int size;
 
     /**
-     * This is the constructor that constructs a new ArrayList.
+     * This is the constructor that constructs a new main.ArrayList.
      * <p>
      * Recall that Java does not allow for regular generic array creation,
      * so instead we cast an Object[] to a T[] to get the generic typing.
@@ -74,23 +76,15 @@ public class ArrayList<T> {
         if (data == null) {
             throw new IllegalArgumentException("Data Cannot be null");
         }
-        ;
-
-        T removedata = null;
-
-
-        for (int i = backingArray.length - 1; i >= 0; i--) {
-            if (backingArray[i] != null) {
-
-                removedata = backingArray[i];
-
-                backingArray[i] = null;
-                break;
-            }
+        if (size == backingArray.length) {
+            // Resize the array if it's full
+            resize();
         }
 
-        return removedata;
+        int last_array = size();
 
+        backingArray[last_array-1] = data;
+        size++;
     }
 
     /**
@@ -108,7 +102,7 @@ public class ArrayList<T> {
     public T removeFromFront() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
         if (backingArray[0] == null) {
-            throw new IllegalArgumentException("Data Cannot be null");
+            throw new NoSuchElementException("List Empty");
         }
         ;
 
@@ -132,7 +126,7 @@ public class ArrayList<T> {
     public T removeFromBack() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
         if (backingArray[0] == null) {
-            throw new IllegalArgumentException("Data Cannot be null");
+            throw new NoSuchElementException("List Empty");
         }
 
 
@@ -152,6 +146,18 @@ public class ArrayList<T> {
         return removedata;
 //        remove the last data
 
+    }
+
+    ;
+
+    private void resize() {
+        T[] newArray = (T[]) new Object[backingArray.length * 2];
+
+        for (int i = 0; i < size; i++) {
+            newArray[i] = backingArray[i];
+        }
+
+        backingArray = newArray;
     }
 
     /**
@@ -186,9 +192,10 @@ public class ArrayList<T> {
         debugList.addToFront(2);
         debugList.addToFront(3);
         debugList.addToBack(4);
-        debugList.removeFromFront();
 
 
+        System.out.println(debugList.removeFromFront());
+        System.out.println(debugList.removeFromBack());
     }
 
 }
