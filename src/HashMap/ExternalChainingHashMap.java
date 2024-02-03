@@ -93,7 +93,7 @@ public class ExternalChainingHashMap<K, V> {
 //          Checks if duplicate exists
             else {
                 while (currentNode != null) {
-                    if (currentNode.getKey() == key) {
+                    if (currentNode.getKey().equals(key)) {
                         currentNode.setValue(value);
                         break;
                     } else {
@@ -104,7 +104,6 @@ public class ExternalChainingHashMap<K, V> {
                               ExternalChainingMapEntry<K, V> temp = table[index];
                               table[index] = new ExternalChainingMapEntry<>(key, value);
                               table[index].setNext(temp);
-
                               }
                           }
                     }
