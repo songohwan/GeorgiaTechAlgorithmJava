@@ -70,27 +70,51 @@ public class ExternalChainingHashMap<K, V> {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
         int index = Math.abs(key.hashCode()) % table.length;
 
+
         // instantiate new table
-        if (table[index] == null){
+        if (table[index] == null) {
             table[index] = new ExternalChainingMapEntry<>(key, value);
-        } else if (table[index] != null && table[index].getKey() == key){
+        } else if (table[index] != null && table[index].getKey() == key) {
             table[index] = new ExternalChainingMapEntry<>(key, value);
-        }
-         else if (table[index] != null && table[index].getKey() != key){
-//          Checks if duplicate exists
-            while (table[index].getNext() == null){
 
-                table[index].setNext(new ExternalChainingMapEntry<>(key, value));
+
+//            if table index is already populated, and add to next chains
+        } else if (table[index] != null && table[index].getKey() != key) {
+            ExternalChainingMapEntry<K, V> currentNode = table[index].getNext();
+
+
+//            adding to first chain
+            if (currentNode == null) {
+                ExternalChainingMapEntry<K, V> previousNode = table[index];
                 table[index] = new ExternalChainingMapEntry<>(key, value);
-
-                table[index].setNext(new ExternalChainingMapEntry<>(key, value));
+                table[index].setNext(previousNode);
             }
 
-        }
-        V returnValue = value;
-        size ++;
+//          Checks if duplicate exists
+            else {
+                while (currentNode != null) {
+                    if (currentNode.getKey() == key) {
+                        currentNode.setValue(value);
+                        break;
+                    } else {
+                        currentNode = currentNode.getNext();
+//                        if after loops and could not find any duplicates
+                          if (currentNode == null) {
+//                              again loop through the current list
+                              ExternalChainingMapEntry<K, V> temp = table[index];
+                              table[index] = new ExternalChainingMapEntry<>(key, value);
+                              table[index].setNext(temp);
+
+                              }
+                          }
+                    }
+                }
+//           if duplicate does not exist
+            }
+    V returnValue = value;
+    size++;
         return returnValue;
-    }
+}
 //
 //    private void acessNextKeys (ExternalChainingMapEntry<K, V> entry, int depth) {
 //        if (entry == null){
@@ -98,63 +122,63 @@ public class ExternalChainingHashMap<K, V> {
 //        }
 //    }
 
-    /**
-     * Removes the entry with a matching key from the map.
-     *
-     * @param key The key to remove.
-     * @return The value associated with the key.
-     * @throws java.lang.IllegalArgumentException If key is null.
-     * @throws java.util.NoSuchElementException   If the key is not in the map.
-     */
+/**
+ * Removes the entry with a matching key from the map.
+ *
+ * @param key The key to remove.
+ * @return The value associated with the key.
+ * @throws java.lang.IllegalArgumentException If key is null.
+ * @throws java.util.NoSuchElementException   If the key is not in the map.
+ */
 //    public V remove(K key) {
 //        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
 //    }
 
-    /**
-     * Helper method stub for resizing the backing table to length.
-     * <p>
-     * This method should be called in put() if the backing table needs to
-     * be resized.
-     * <p>
-     * You should iterate over the old table in order of increasing index and
-     * add entries to the new table in the order in which they are traversed.
-     * <p>
-     * Since resizing the backing table is working with the non-duplicate
-     * data already in the table, you won't need to explicitly check for
-     * duplicates.
-     * <p>
-     * Hint: You cannot just simply copy the entries over to the new table.
-     *
-     * @param Length The new length of the backing table.
-     */
+/**
+ * Helper method stub for resizing the backing table to length.
+ * <p>
+ * This method should be called in put() if the backing table needs to
+ * be resized.
+ * <p>
+ * You should iterate over the old table in order of increasing index and
+ * add entries to the new table in the order in which they are traversed.
+ * <p>
+ * Since resizing the backing table is working with the non-duplicate
+ * data already in the table, you won't need to explicitly check for
+ * duplicates.
+ * <p>
+ * Hint: You cannot just simply copy the entries over to the new table.
+ *
+ * @param Length The new length of the backing table.
+ */
 //    private void resizeBackingTable(int length) {
 //        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
 //
 //    }
 
-    /**
-     * Returns the table of the map.
-     * <p>
-     * For grading purposes only. You shouldn't need to use this method since
-     * you have direct access to the variable.
-     *
-     * @return The table of the map.
-     */
-    public ExternalChainingMapEntry<K, V>[] getTable() {
-        // DO NOT MODIFY THIS METHOD!
-        return table;
-    }
+/**
+ * Returns the table of the map.
+ * <p>
+ * For grading purposes only. You shouldn't need to use this method since
+ * you have direct access to the variable.
+ *
+ * @return The table of the map.
+ */
+public ExternalChainingMapEntry<K, V>[] getTable() {
+    // DO NOT MODIFY THIS METHOD!
+    return table;
+}
 
-    /**
-     * Returns the size of the map.
-     * <p>
-     * For grading purposes only. You shouldn't need to use this method since
-     * you have direct access to the variable.
-     *
-     * @return The size of the map.
-     */
-    public int size() {
-        // DO NOT MODIFY THIS METHOD!
-        return size;
-    }
+/**
+ * Returns the size of the map.
+ * <p>
+ * For grading purposes only. You shouldn't need to use this method since
+ * you have direct access to the variable.
+ *
+ * @return The size of the map.
+ */
+public int size() {
+    // DO NOT MODIFY THIS METHOD!
+    return size;
+}
 }
