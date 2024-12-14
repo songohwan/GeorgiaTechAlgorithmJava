@@ -14,6 +14,11 @@ public class SinglyLinkedList<T> {
     private SinglyLinkedListNode<T> tail;
     private int size;
 
+//    public SinglyLinkedList() {
+//        this.head = null;
+//        this.tail = null;
+//    }
+
     /*
      * Do not add a constructor.
      */
@@ -28,17 +33,18 @@ public class SinglyLinkedList<T> {
      */
     public void addToFront(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<>(data);
-        newNode.setNext(head);
-        head = newNode;
-
+        SinglyLinkedListNode SingleNode = new SinglyLinkedListNode(data);
         if (size == 0) {
-            // If the list was empty, the new node is also the tail
-            tail = newNode;
+            SingleNode.setNext(null);
+            head = SingleNode;
+            tail = SingleNode;
+        } else {
+            SingleNode.setNext(head);
+            head = SingleNode;
         }
+        size++
 
-        size++;
-
+        ;
     }
 
     /**
@@ -51,24 +57,17 @@ public class SinglyLinkedList<T> {
      */
     public void addToBack(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (data == null) {
-            throw new IllegalArgumentException("Data cannot be null");
-        }
-
-        SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<>(data);
-
+        SinglyLinkedListNode SingleNode = new SinglyLinkedListNode(data);
         if (size == 0) {
-            // If the list was empty, the new node is both the head and the tail
-            head = newNode;
-            tail = newNode;
+            SingleNode.setNext(null);
+            head = SingleNode;
+            tail = SingleNode;
         } else {
-            // Otherwise, update the next pointer of the current tail and set the new node as the tail
-            tail.setNext(newNode);
-            tail = newNode;
+            tail.setNext(SingleNode);
+            tail = SingleNode;
         }
-
-        size++;
-
+        size++
+        ;
 
     }
 
@@ -82,22 +81,9 @@ public class SinglyLinkedList<T> {
      */
     public T removeFromFront() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (size == 0) {
-            throw new NoSuchElementException("List is empty");
-        }
+        T removedata = null;
 
-        T removedData = head.getData();
-        head = head.getNext();
-
-        if (size == 1) {
-            // If there was only one element, update the tail as well
-            tail = null;
-        }
-
-        size--;
-        return removedData;
-
-
+        return removedata;
     }
 
     /**
@@ -109,31 +95,8 @@ public class SinglyLinkedList<T> {
      * @throws java.util.NoSuchElementException if the list is empty
      */
     public T removeFromBack() {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (size == 0) {
-            throw new NoSuchElementException("List is empty");
-        }
-
-        T removedData;
-        if (size == 1) {
-            // If there is only one element, remove it and update both head and tail
-            removedData = head.getData();
-            head = null;
-            tail = null;
-        } else {
-            // Otherwise, traverse the list to find the node before the tail
-            SinglyLinkedListNode<T> current = head;
-            while (current.getNext() != tail) {
-                current = current.getNext();
-            }
-
-            removedData = tail.getData();
-            current.setNext(null);
-            tail = current;
-        }
-
-        size--;
-        return removedData;
+        T removedata = null;
+        return removedata;
     }
 
     /**
@@ -162,6 +125,17 @@ public class SinglyLinkedList<T> {
         return tail;
     }
 
+    public void displayData() {
+
+        SinglyLinkedListNode<T> current = head;
+        while (current != null) {
+            System.out.print(current.getData() + " ");
+            current = current.getNext();
+        }
+        System.out.println();
+
+
+    }
 
 
     /**
@@ -172,6 +146,7 @@ public class SinglyLinkedList<T> {
      *
      * @return the size of the list
      */
+
     public int size() {
         // DO NOT MODIFY THIS METHOD!
         return size;

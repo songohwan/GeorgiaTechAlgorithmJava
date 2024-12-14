@@ -113,6 +113,19 @@ public class ArrayList<T> {
         return removeData;
     }
 
+    public void addAtIndex(int index, T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+
+        for (int i = index; i < backingArray.length; i++){
+            backingArray[i+1] = backingArray[i];
+        }
+        backingArray[index] = data;
+
+    }
+
+
+
     /**
      * Removes and returns the last data of the list.
      * <p>
@@ -168,8 +181,7 @@ public class ArrayList<T> {
      *
      * @return the backing array of the list
      */
-    public T[] getBackingArray() {
-        // DO NOT MODIFY THIS METHOD!
+    public T[] getBackingArray() {        // DO NOT MODIFY THIS METHOD!
         return backingArray;
     }
 
@@ -191,7 +203,8 @@ public class ArrayList<T> {
         debugList.addToFront(0);
         debugList.addToFront(2);
         debugList.addToFront(3);
-        debugList.addToBack(4);
+
+
 
 
         System.out.println(debugList.removeFromFront());

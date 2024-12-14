@@ -8,6 +8,8 @@ public class Main {
         myMap.put(6, "abc");
         myMap.put(19, "abc");
         myMap.put(32, "abc");
+        myMap.put(6, "def");
+        myMap.put(7, "def");
         System.out.println("finished");
 
     }

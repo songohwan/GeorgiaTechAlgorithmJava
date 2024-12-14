@@ -36,6 +36,7 @@ public class AVL<T extends Comparable<? super T>> {
     public void add(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
         if (root == null) {
+            size++;
             root = new AVLNode<>(data);
         } else {
             addH(data, root);
@@ -44,10 +45,7 @@ public class AVL<T extends Comparable<? super T>> {
 
 
     private void addH(T data, AVLNode<T> node) {
-
-
         int comparison = data.compareTo(node.getData());
-
         if (comparison > 0) {
             if (node.getRight() == null) {
                 node.setRight(new AVLNode<>(data));
@@ -61,6 +59,8 @@ public class AVL<T extends Comparable<? super T>> {
                 addH(data, node.getLeft());
             }
         }
+        node = balance(node);
+        updateHeightAndBF(node);
     }
 
 
@@ -95,6 +95,9 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public T remove(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null.");
+        }
         if (root == null) {
             root = new AVLNode<>(data);
         } else {
@@ -126,6 +129,10 @@ public class AVL<T extends Comparable<? super T>> {
                 node.setRight(removeH(node.getRight(), SubTreeMin));
             }
         }
+        node = balance(node);
+
+        updateHeightAndBF(node);
+
         return node;
     }
 

@@ -10,10 +10,7 @@ public class Main {
         myAVL.add(68);
         myAVL.add(60);
         myAVL.add(30);
-        myAVL.remove(60);
 
         System.out.println("Test Complete");
-
     }
-
 }
